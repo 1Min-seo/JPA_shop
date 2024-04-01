@@ -14,5 +14,4 @@ public class Member {
     @GeneratedValue
     private Long id;
     private String username;
-
 }
