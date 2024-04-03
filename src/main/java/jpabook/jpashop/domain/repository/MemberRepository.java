@@ -25,11 +25,11 @@ public class MemberRepository {
     }
 
     public List<Member> findAll(){
-        //jpql -> sql과 비슷하지만 대상이 프로그램이 아니라 앤티티
+        //jpql -> sql과 비슷하지만 대상이 테이블이 아니라 앤티티
         return em.createQuery("select m from Member m", Member.class)
                 .getResultList();
-        //sql은 테이블을 대상으로 쿼리를 하는데,
-        // Jpql 엔티티 객체를 대상으로 쿼리를 함.
+        //Member.class는 반환할 엔티티 타입을 지정
+        //getResultList()를 호출하여 쿼리를 실행하고 결과를 가져옴
     }
 
     public List<Member> findByName(String name) {
@@ -37,6 +37,9 @@ public class MemberRepository {
         return em.createQuery("select m from m where m.name= :name", Member.class)
                 .setParameter("name", name)
                 .getResultList();
+        //:name은 파라미터 바인딩을 나타내며, 나중에 이를 실제 값으로 설정
+        //setParameter("name", name)을 사용하여 :name에 파라미터를 바인딩. 이를 통해 특정 이름을 가진 회원을 찾음
+        //getResultList()를 호출하여 쿼리를 실행하고 결과를 가져옴.
 
     }
 }
