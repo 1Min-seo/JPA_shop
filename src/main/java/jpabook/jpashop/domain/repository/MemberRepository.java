@@ -34,7 +34,7 @@ public class MemberRepository {
 
     public List<Member> findByName(String name) {
         //파라미터 바인딩해서 특정 회원의 이름에 대해서 찾는다.
-        return em.createQuery("select m from m where m.name= :name", Member.class)
+        return em.createQuery("select m from Member m where m.name= :name", Member.class)
                 .setParameter("name", name)
                 .getResultList();
         //:name은 파라미터 바인딩을 나타내며, 나중에 이를 실제 값으로 설정
