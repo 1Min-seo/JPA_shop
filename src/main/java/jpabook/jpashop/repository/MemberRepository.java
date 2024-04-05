@@ -29,7 +29,7 @@ public class MemberRepository {
     public List<Member> findAll(){
         //jpql -> sql과 비슷하지만 대상이 테이블이 아니라 앤티티
         return em.createQuery("select m from Member m", Member.class)
-                .getResultList();
+                .getResultList();git
         //Member.class는 반환할 엔티티 타입을 지정
         //getResultList()를 호출하여 쿼리를 실행하고 결과를 가져옴
     }
