@@ -20,9 +20,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/members/new")
-    public String createForm(Model model){
-        model.addAttribute("memberForm",new MemberForm());
-        return "members/createMemberForm";
+    public String memberForm(Model model){
+       model.addAttribute("memberForm",new MemberForm());
+
+       return "/members/createMemberForm";
     }
 
     @PostMapping("/members/new")
@@ -32,13 +33,14 @@ public class MemberController {
         if(result.hasErrors()){
             return "members/createMemberForm";
         }
-        Address address=new Address(form.getCity(), form.getStreet(), form.getZipcode());
 
         Member member=new Member();
+        Address address=new Address(form.getCity(), form.getStreet(), form.getZipcode());
         member.setName(form.getName());
         member.setAddress(address);
 
         memberService.join(member);
+
         return "redirect:/";
 
     }
@@ -47,6 +49,7 @@ public class MemberController {
     public String memberList(Model model){
         List<Member> members = memberService.findMembers();
         model.addAttribute("members", members);
+
         return "members/memberList";
     }
 

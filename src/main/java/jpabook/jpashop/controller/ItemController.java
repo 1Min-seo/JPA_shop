@@ -21,9 +21,9 @@ public class ItemController {
 
     @GetMapping("/items/new")
     public String createForm(Model model){
-        model.addAttribute("form", new BookForm());
-        return "items/createItemForm";
+       model.addAttribute("form", new BookForm());
 
+       return "/items/createItemForm";
     }
 
     @PostMapping("/items/new")
@@ -42,14 +42,15 @@ public class ItemController {
 
     @GetMapping("/items")
     public String itemList(Model model){
-      List<Item> items=itemService.findItems();
-      model.addAttribute("items", items);
-      return "items/itemList";
+        List<Item> items=itemService.findItems();
+        model.addAttribute("items", items);
+
+        return "Items/itemList";
     }
 
     @GetMapping("items/{itemId}/edit")
     public String updateItemForm(@PathVariable("itemId") Long itemId, Model model){
-        Book item = (Book)itemService.findOne(itemId);
+        Book item=(Book)itemService.findOne(itemId);
         BookForm form=new BookForm();
 
         form.setId(item.getId());
@@ -60,21 +61,23 @@ public class ItemController {
         form.setIsbn(item.getIsbn());
 
         model.addAttribute("form", form);
-        return "items/updateItemForm";
 
+        return "items/updateItemForm";
     }
 
     @PostMapping("items/{itemId}/edit")
-    public String updateItem(@PathVariable String itemId, @ModelAttribute("form") BookForm form){
-        Book book=new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form){
+//        Book book=new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
 
-        itemService.saveItem(book);
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+
+
         return "redirect:/items";
     }
 }
